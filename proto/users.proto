@@ -1,29 +1,35 @@
 syntax = "proto3";
-
-option go_package = "users";
-
 package users;
 
-service User {
-    rpc AddUser (AddRequest) returns (AddReply) {}
-    rpc DeleteUser (DeleteRequest) returns (DeleteReply) {}
+option go_package = "/proto";
+
+service UserService {
+    rpc AddUser (AddRequest) returns (Reply) {}
+    rpc DeleteUser (DeleteRequest) returns (Reply) {}
     rpc ListUsers (ListRequest) returns (stream ListReply) {}
 }
 
-message AddRequest {
+message User {
     int32 id = 1;
+    optional string email = 2;
 }
 
-message AddReply {
+message AddRequest {
+    optional string email = 1;
+}
 
+message Reply {
+    User user = 1;
 }
 
 message DeleteRequest {
     int32 id = 1;
 }
 
-message DeleteReply {}
+message ListRequest {
 
-message ListRequest {}
+}
 
-message ListReply {}
+message ListReply {
+    repeated User users = 1;
+}
