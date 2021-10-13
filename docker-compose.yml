@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  user:
+    build .
+    ports:
+      - "9090:9090"
+    volumes:
+      - .:/app
+  redis:
+    image: "redis:alpine"
+  postgres:
+    image: postgres
+    restart: always
+  kafka:
+  clickhouse:
+  
+  
