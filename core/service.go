@@ -1,22 +1,22 @@
 package core
 
 import (
-	"github.com/rabarbra/models"
+	models "github.com/rabarbra/accounts_service/models"
+	pb "github.com/rabarbra/accounts_service/proto"
 )
 
-type service struct {
-	m       map[int32]models.User
-	next_id int32
+type Service struct {
+	pb.UserServiceServer
+	logg *logg.Logger
+	db   controller.UserController
 }
 
-func NewService() models.Service {
-	return &service{
-		m: map[int32]models.User{
-			1: {Id: 1, Email: "Poly@fv.tre"},
-			2: {Id: 2, Email: "SDdsf@ret.tr"},
-		},
-		next_id: 3,
+func NewService() *Service {
+	return &Service{
+		logg: logg,
+		db:   controller.New(db),
 	}
+
 }
 
 func (s *service) GetUser(id int32) (result models.User, err error) {
@@ -27,7 +27,7 @@ func (s *service) GetUser(id int32) (result models.User, err error) {
 }
 
 func (s *service) AddUser(email string) (id int32, err error) {
-	s.m[s.next_id] = models.User{Id: s.next_id, email: email}
+	s.m[s.next_id] = models.User{Id: s.next_id, Email: email}
 	s.next_id += 1
 	return s.next_id - 1, nil
 }
