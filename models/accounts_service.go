@@ -1,5 +1,9 @@
 package user
 
+import "errors"
+
+var ErrNotFound = errors.New("not found")
+
 type User struct {
 	Id    int32
 	Email string
